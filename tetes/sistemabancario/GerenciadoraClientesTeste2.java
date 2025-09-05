@@ -1,5 +1,6 @@
 package sistemabancario;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -69,13 +70,34 @@ public class GerenciadoraClientesTeste2 {
 		 * 3 - Verificação e avaliação
 		 */
 		
-		/* ==== Execução ====*/
+		/* ==== 1.Montagem do Cenário ====*/
+		//Executada automaticamente através da injeção do método setUp (@Before)
+		
+		/* ==== 2.Execução ====*/
 		Cliente cliente = gerClientes.pesquisaCliente(2);
 		
 		
-		/* ==== Verificação e avaliação ====*/
+		/* ==== 3.Verificação e avaliação ====*/
 		assertThat(cliente.getId(), is(2));
 		assertThat(cliente.getNome(), is("Maria da Silva"));
+	}
+	
+	/**
+	 * Teste da pesquisa de um cliente inexistente a partir do seu ID
+	 * @author gabriel.silva
+	 * @date 05/09/2025
+	 */
+	@Test
+	public void testePesquisaClienteInexistente() {
+		/* ==== 1.Montagem do Cenário ====*/
+		//Executada automaticamente através da injeção do método setUp (@Before)
+		
+		/* ==== 2.Execução ====*/
+		Cliente clienteTeste = gerClientes.pesquisaCliente(10);
+		
+		/* ==== 3.Verificação e avaliação ====*/
+		assertNull(clienteTeste);
+		assertThat(gerClientes.getClientesDoBanco().size(), is(2));
 	}
 	
 	/**
@@ -85,15 +107,37 @@ public class GerenciadoraClientesTeste2 {
 	 */
 	@Test
 	public void testeRemoveCliente() {
+		/* ==== 1.Montagem do Cenário ====*/
+		//Executada automaticamente através da injeção do método setUp (@Before)
 		
-		/* ==== Execução ====*/
+		/* ==== 2.Execução ====*/
 		boolean clienteRemovido = gerClientes.removeCliente(idCliente02);
 		
-		/* ==== Verificação e avaliação ====*/
+		/* ==== 3.Verificação e avaliação ====*/
 		assertThat(clienteRemovido, is(true));
 		assertTrue(clienteRemovido); //igual ao de cima
 		assertThat(gerClientes.getClientesDoBanco().size(), is(1));
 		assertNull(gerClientes.pesquisaCliente(idCliente02));
+	}
+	
+	/**
+	 * Teste de remoção de um cliente inexistente a partir do ID
+	 * @author gabriel.silva
+	 * @date 05/09/2025
+	 */
+	@Test
+	public void testeRemoveClienteInexistente() {
+		/* ==== 1.Montagem do Cenário ====*/
+		//Executada automaticamente através da injeção do método setUp (@Before)
+		
+		/* ==== 2.Execução ====*/
+		boolean clienteRemovido = gerClientes.removeCliente(10);
+		
+		/* ==== 3.Verificação e avaliação ====*/
+		assertFalse(clienteRemovido);
+		assertThat(clienteRemovido, is(false));
+		assertThat(gerClientes.getClientesDoBanco().size(), is(2));
+		assertNull(gerClientes.pesquisaCliente(10));
 	}
 	
 	
