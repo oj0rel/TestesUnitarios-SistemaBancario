@@ -57,12 +57,12 @@ public class GerenciadoraContaTeste2 {
 		
 		/* ==== Execuçaõ do negócio selecionado para o Teste ====*/
 		
-		boolean resultadoTransfere = gerContas.transfereValor(idConta01, 300, idConta02);
+		boolean resultadoTransfere = gerContas.transfereValor(idConta01, 200, idConta02);
 		
 		/* ==== Verficações e Análise ====*/
 		assertTrue(resultadoTransfere);
-		assertThat(gerContas.pesquisaConta(idConta01).getSaldo(), is(-100.0));
-		assertThat(gerContas.pesquisaConta(idConta02).getSaldo(), is(300.0));
+		assertThat(gerContas.pesquisaConta(idConta01).getSaldo(), is(0.0));
+		assertThat(gerContas.pesquisaConta(idConta02).getSaldo(), is(200.0));
 	}
 	
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import org.junit.Test;
  * @author gabriel.silva
  *
  */
-public class GerenciadoraClientesTeste2 {
+public class GerenciadoraClientesTeste3 {
 
 	private GerenciadoraClientes gerClientes;
 	
@@ -139,6 +140,77 @@ public class GerenciadoraClientesTeste2 {
 		assertThat(gerClientes.getClientesDoBanco().size(), is(2));
 		assertNull(gerClientes.pesquisaCliente(10));
 	}
+	
+	//validação quando o cliente está no intervalo de idade permitido, na su porção central
+		@Test
+		public void testeClienteIdadePermitida1() throws IdadeNaoPermitidaException {
+			//cenario customizado para esse teste
+			Cliente cliente = new Cliente(3, "Fabio", 30, "fabio@fabio.com", idCliente01, true);
+			
+			//execução
+			boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+			
+			//avaliação e verificação
+			assertTrue(idadeValida);
+		}
+		
+	//validação quando o cliente está no intervalo de idade permitido, no limite inferior
+		@Test
+		public void testeClienteIdadePermitidaLimiteInferior() throws IdadeNaoPermitidaException {
+			//cenario customizado para esse teste
+			Cliente cliente = new Cliente(4, "Roger", 18, "roger@roger.com", 4, true);
+					
+			//execução
+			boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+					
+			//avaliação e verificação
+			assertTrue(idadeValida);
+		}
+		
+	//validação quando o cliente está no intervalo de idade permitido, no limite inferior
+		@Test
+		public void testeClienteIdadePermitidaLimiteSuperior() throws IdadeNaoPermitidaException {
+			//cenario customizado para esse teste
+			Cliente cliente = new Cliente(5, "Clayton", 65, "clayton@clayton.com", 5, true);
+							
+			//execução
+			boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+							
+			//avaliação e verificação
+			assertTrue(idadeValida);
+		}
+		
+	//validação quando o cliente está no intervalo de idade NÃO permitido, no limite inferior
+		@Test
+		public void testeClienteIdadeNaoPermitidaLimiteInferior() throws IdadeNaoPermitidaException {
+			//cenario customizado para esse teste
+			Cliente cliente = new Cliente(6, "Yasmin", 17, "yasmin@yasmin.com", 6, true);
+									
+			//execução
+			try {
+				gerClientes.validaIdade(cliente.getIdade());
+				fail();
+			} catch (Exception e) {
+				assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+			}
+									
+		}
+		
+	//validação quando o cliente está no intervalo de idade NÃO permitido, no limite superior
+		@Test
+		public void testeClienteIdadeNaoPermitidaLimiteSuperior() throws IdadeNaoPermitidaException {
+			//cenario customizado para esse teste
+			Cliente cliente = new Cliente(7, "Darley", 66, "darley@darley.com", 7, true);
+											
+			//execução
+			try {
+				gerClientes.validaIdade(cliente.getIdade());
+				fail();
+			} catch (Exception e) {
+				assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+			}
+											
+		}
 	
 	
 }

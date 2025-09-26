@@ -66,7 +66,7 @@ public class GerenciadoraClientes {
 	/**
 	 * Informa se um determinado cliente esta ativo ou nao.
 	 * @param idCliente ID do cliente cujo status sera verificado
-	 * @return true se o cliente esta ativo. False, caso contrario. 
+	 * @return true se o cliente esta ativo. False, caso contrario.
 	 */
 	public boolean clienteAtivo (int idCliente) {
 		boolean clienteAtivo = false;
